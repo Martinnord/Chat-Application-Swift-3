@@ -39,7 +39,6 @@ class MessageController: UITableViewController {
                 
                 if let dictionary = snapshot.value as? [String: Any] {
                     self.navigationItem.title = dictionary["name"] as? String
-                    print(snapshot)
                 }
             }, withCancel: nil)
         }
