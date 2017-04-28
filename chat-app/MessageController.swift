@@ -16,7 +16,16 @@ class MessageController: UITableViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         
+        let image = UIImage(named: "new_message_icon")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleNewMessage))
+        
         checkIfUserIsLoggedIn()
+    }
+    
+    func handleNewMessage() {
+        let newMessageController = NewMessageController()
+        let navController = UINavigationController(rootViewController: newMessageController)
+        present(navController, animated: true, completion: nil)
     }
 
     func checkIfUserIsLoggedIn() {
@@ -30,6 +39,7 @@ class MessageController: UITableViewController {
                 
                 if let dictionary = snapshot.value as? [String: Any] {
                     self.navigationItem.title = dictionary["name"] as? String
+                    print(snapshot)
                 }
             }, withCancel: nil)
         }

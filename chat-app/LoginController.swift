@@ -47,7 +47,7 @@ class LoginController: UIViewController {
         }
         FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
             if error != nil {
-                print(error as Any)
+                print(error)
                 return
             }
             // Successfullu logged in our user
@@ -71,7 +71,7 @@ class LoginController: UIViewController {
             }
             
             // Successfully authenticated user
-            let ref = FIRDatabase.database().reference(fromURL: "https://newmessenger-dc7b2.firebaseio.com/")
+            let ref = FIRDatabase.database().reference(fromURL: "https://chat-app-575b3.firebaseio.com/")
             let usersReference = ref.child("users").child(uid)
             let values = ["name": name, "email": email]
             usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
@@ -121,14 +121,6 @@ class LoginController: UIViewController {
         return tf
     }()
     
-    let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "gameofthrones_splash")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        return imageView
-    }()
-    
     lazy var loginRegisterSegmentedControl: UISegmentedControl = {
         let sc = UISegmentedControl(items: ["Login", "Register"])
         sc.translatesAutoresizingMaskIntoConstraints = false
@@ -169,12 +161,10 @@ class LoginController: UIViewController {
         
         view.addSubview(inputsContainerView)
         view.addSubview(loginRegisterButton)
-        view.addSubview(profileImageView)
         view.addSubview(loginRegisterSegmentedControl)
         
         setupInputsContainterView()
         setupLoginRegisterButton()
-        setupProfileimageView()
         setupLoginRegisterSegmentedControl()
     }
     
@@ -248,14 +238,6 @@ class LoginController: UIViewController {
         loginRegisterButton.topAnchor.constraint(equalTo: inputsContainerView.bottomAnchor, constant: 12).isActive = true
         loginRegisterButton.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor).isActive = true
         loginRegisterButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-    }
-    
-    func setupProfileimageView() {
-        // Need x, y, width and height constraints
-        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileImageView.bottomAnchor.constraint(equalTo: loginRegisterSegmentedControl.topAnchor, constant: -12).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
