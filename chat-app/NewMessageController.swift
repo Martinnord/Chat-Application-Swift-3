@@ -17,6 +17,8 @@ class NewMessageController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.backgroundColor = UIColor().HexToColor(hexString: "#2D2F56", alpha: 1.0)
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         
@@ -48,12 +50,27 @@ class NewMessageController: UITableViewController {
     }
     
     // Setting up tableviews
+
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.clear
+    }
+    
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        
+        // Styling the font
+        cell.textLabel?.textColor = UIColor.white
+        cell.textLabel?.font = UIFont(name: "Avenir", size: 18)
+        
+        cell.selectionStyle = .none
+
     
         let user = users[indexPath.row]
         cell.textLabel?.text = user.name
@@ -70,6 +87,32 @@ class UserCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// Being able to use hexa colors
+extension UIColor {
+    func HexToColor(hexString: String, alpha:CGFloat? = 1.0) -> UIColor {
+        // Convert hex string to an integer
+        let hexint = Int(self.intFromHexString(hexStr: hexString))
+        let red = CGFloat((hexint & 0xff0000) >> 16) / 255.0
+        let green = CGFloat((hexint & 0xff00) >> 8) / 255.0
+        let blue = CGFloat((hexint & 0xff) >> 0) / 255.0
+        let alpha = alpha!
+        // Create color object, specifying alpha as well
+        let color = UIColor(red: red, green: green, blue: blue, alpha: alpha)
+        return color
+    }
+    
+    func intFromHexString(hexStr: String) -> UInt32 {
+        var hexInt: UInt32 = 0
+        // Create scanner
+        let scanner: Scanner = Scanner(string: hexStr)
+        // Tell scanner to skip the # character
+        scanner.charactersToBeSkipped = NSCharacterSet(charactersIn: "#") as CharacterSet
+        // Scan hex value
+        scanner.scanHexInt32(&hexInt)
+        return hexInt
     }
 }
 
