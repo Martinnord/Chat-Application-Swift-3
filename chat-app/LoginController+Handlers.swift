@@ -7,8 +7,56 @@
 //
 
 import UIKit
+import Firebase
 
 extension LoginController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func handleRegister() {
+        guard let email = emailTextField.text, let password = passwordTextField.text, let name = nameTextField.text else {
+            print("Form is not valid")
+            return
+        }
+        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
+            
+            if error != nil {
+                print(error as Any)
+                return
+            }
+            guard let uid = user?.uid else {
+                return
+            }
+            
+            let storageRef = FIRStorage.storage().reference().child("logon.png")
+            if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
+            
+                storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
+                    
+                    if error != nil {
+                        print(error)
+                        return
+                    }
+                    print(metadata)
+                })
+            }
+            
+            
+            // Successfully authenticated user
+            let ref = FIRDatabase.database().reference(fromURL: "https://chat-app-575b3.firebaseio.com/")
+            let usersReference = ref.child("users").child(uid)
+            let values = ["name": name, "email": email]
+            usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
+                
+                if err != nil {
+                    print(err as Any)
+                    return
+                }
+                self.dismiss(animated: true, completion: nil)
+            })
+        })
+    }
+    
+    
+    
     
     func handleSelectProfileImageView() {
         let picker = UIImagePickerController()
