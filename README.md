@@ -1,7 +1,7 @@
 # Chat Application
 
 ## Description
-This is a simple chat-app built with Swift 3.1 and Google's Firebase. The user wil be able to chat, send videos and photos with other users that are signed up on the platform. This app is at a very early stage and I might be adding some other features in the future. NEXT INSTAGRAM?! ;]
+This is a simple chat-app built with Swift 3.1 and Google's Firebase. The user will be able to chat, send videos and photos with other users that are signed up on the platform. This app is at a very early stage and I might be adding some other features in the future. NEXT INSTAGRAM?! ;]
 
 ### Recieve pushnotifications
 You will never miss a message from a friend!
