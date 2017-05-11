@@ -16,6 +16,7 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
             print("Form is not valid")
             return
         }
+        
         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
             
             if error != nil {
@@ -55,9 +56,7 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
         })
     }
     
-    
-    
-    
+    // User picks a profile picture
     func handleSelectProfileImageView() {
         let picker = UIImagePickerController()
         

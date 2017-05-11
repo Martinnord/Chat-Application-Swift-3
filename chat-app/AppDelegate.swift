@@ -25,6 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = UINavigationController(rootViewController: MessageController())
         
         return true
+        
+        let shortcut2 = UIMutableApplicationShortcutItem(type: "SearchMusic",
+            localizedTitle: "Messageh",
+            localizedSubtitle: "Send a new message!",
+            icon: UIApplicationShortcutIcon(type: .message),
+            userInfo: nil
+        )
+        application.shortcutItems = [shortcut2]
+
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -49,6 +58,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        if shortcutItem.type == "com.MartinNord.chat-app.MessageController" {
+            
+        }
+    }
+    
 
 }
 

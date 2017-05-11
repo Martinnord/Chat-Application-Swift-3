@@ -52,11 +52,10 @@ class NewMessageController: UITableViewController {
     // Setting up tableviews
 
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+/*    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor.clear
     }
-    
-    
+  */  
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
@@ -69,9 +68,9 @@ class NewMessageController: UITableViewController {
         cell.textLabel?.textColor = UIColor.white
         cell.textLabel?.font = UIFont(name: "Avenir", size: 18)
         
+        // No highlighed tableviewcell
         cell.selectionStyle = .none
 
-    
         let user = users[indexPath.row]
         cell.textLabel?.text = user.name
         cell.detailTextLabel?.text = user.email

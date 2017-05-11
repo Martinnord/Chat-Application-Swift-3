@@ -2,13 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIApplicationShortcutitems</key>
+	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeMessage</string>
 			<key>UIApplicationShortcutItemTitle</key>
-			<string>Register</string>
+			<string>Message</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>Send a message to someone new!</string>
 			<key>UIApplicationShortcutItemType</key>
-			<string>com.MartinNord.chat-app</string>
+			<string>com.MartinNord.chat-app.MessageController</string>
 		</dict>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>

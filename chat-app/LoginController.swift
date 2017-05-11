@@ -11,7 +11,7 @@ import Firebase
 
 class LoginController: UIViewController {
     
-    
+    // All the textfields
     let inputsContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.white
@@ -21,6 +21,7 @@ class LoginController: UIViewController {
         return view
     }()
     
+    // The login and register button
     lazy var loginRegisterButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor(r: 80, g: 101, b: 161)
@@ -32,6 +33,7 @@ class LoginController: UIViewController {
         return button
     }()
     
+    // If the user chooses to login or register
     func handleLoginRegister() {
         if loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
             handleLogin()
