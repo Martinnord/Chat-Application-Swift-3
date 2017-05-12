@@ -18,7 +18,6 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
         }
         
         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
-            
             if error != nil {
                 print(error as Any)
                 return
@@ -29,30 +28,33 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
             
             let storageRef = FIRStorage.storage().reference().child("logon.png")
             if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
-            
                 storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
                     
                     if error != nil {
-                        print(error)
                         return
                     }
-                    print(metadata)
+
+                    if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
+                        let values = ["name": name, "email": email, "profileImageUrl": profileImageUrl]
+                        self.registerUserIntoDatabaseWithUID(uid: uid, values: values as [String : AnyObject])
+                    
+                    }
                 })
             }
+        })
+    }
+    
+    private func registerUserIntoDatabaseWithUID(uid: String, values: [String: AnyObject]) {
+        // Successfully authenticated user
+        let ref = FIRDatabase.database().reference(fromURL: "https://chat-app-575b3.firebaseio.com/")
+        let usersReference = ref.child("users").child(uid)
+        usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
             
-            
-            // Successfully authenticated user
-            let ref = FIRDatabase.database().reference(fromURL: "https://chat-app-575b3.firebaseio.com/")
-            let usersReference = ref.child("users").child(uid)
-            let values = ["name": name, "email": email]
-            usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
-                
-                if err != nil {
-                    print(err as Any)
-                    return
-                }
-                self.dismiss(animated: true, completion: nil)
-            })
+            if err != nil {
+                print(err as Any)
+                return
+            }
+            self.dismiss(animated: true, completion: nil)
         })
     }
     
