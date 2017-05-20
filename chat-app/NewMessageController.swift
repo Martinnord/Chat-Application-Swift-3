@@ -70,12 +70,15 @@ class NewMessageController: UITableViewController {
         
         // No highlighed tableviewcell
         cell.selectionStyle = .none
+        
+        // Styling the profile image icons
+        cell.imageView?.contentMode = .scaleAspectFit
+
 
         let user = users[indexPath.row]
         cell.textLabel?.text = user.name
         cell.detailTextLabel?.text = user.email
         
-        cell.imageView?.image = UIImage(named: "logo")
         
         if let profileImageUrl = user.profileImageUrl {
             let url = URL(string: profileImageUrl)
@@ -88,8 +91,10 @@ class NewMessageController: UITableViewController {
                 }
                 
                 // Success!
-                dispatch_as
-                cell.imageView?.image = UIImage(data: data!)
+                DispatchQueue.main.async() {
+                    cell.imageView?.image = UIImage(data: data!)
+
+                }
             }).resume()
         }
         

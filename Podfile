@@ -10,6 +10,6 @@ target 'chat-app' do
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
-  pod 'Kingfisher', '~> 3.0'
+  pod 'Kingfisher'
 
 end
