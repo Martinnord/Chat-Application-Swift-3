@@ -18,5 +18,5 @@ You will never miss a message from a friend!
 
 ### Todo:
 - Add push notification
-- Add 3D touch
+- Redesign EVERTHING
 - Send my first message
