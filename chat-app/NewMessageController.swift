@@ -49,13 +49,6 @@ class NewMessageController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    // Setting up tableviews
-
-    
-/*    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.clear
-    }
-  */  
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
@@ -65,7 +58,6 @@ class NewMessageController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
         
         // Styling the font
-        cell.textLabel?.textColor = UIColor.white
         cell.textLabel?.font = UIFont(name: "Avenir", size: 18)
         
         // No highlighed tableviewcell
@@ -77,7 +69,9 @@ class NewMessageController: UITableViewController {
         
         
         if let profileImageUrl = user.profileImageUrl {
-            let url = URL(string: profileImageUrl)
+            
+            cell.profileImageView.loadingImageUsingCacheWithUrlString(urlString: profileImageUrl)
+/*            let url = URL(string: profileImageUrl)
             URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
                 
                 // If error, return out
@@ -91,7 +85,7 @@ class NewMessageController: UITableViewController {
                     cell.profileImageView.image = UIImage(data: data!)
                 }
             
-            }).resume()
+            }).resume()*/
         }
         
         return cell
@@ -107,9 +101,9 @@ class UserCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        textLabel?.frame = CGRect(x: 56, y: textLabel!.frame.origin.y, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        textLabel?.frame = CGRect(x: 56, y: textLabel!.frame.origin.y - 2, width: textLabel!.frame.width, height: textLabel!.frame.height)
         
-        detailTextLabel?.frame = CGRect(x: 56, y: detailTextLabel!.frame.origin.y, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
+        detailTextLabel?.frame = CGRect(x: 56, y: detailTextLabel!.frame.origin.y + 2, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
 
     }
     
