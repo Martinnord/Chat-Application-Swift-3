@@ -27,8 +27,10 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
             }
             
             let storageRef = FIRStorage.storage().reference().child("logon.png")
+            
             if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
                 storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
+                    
                     
                     if error != nil {
                         return
@@ -36,7 +38,7 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
 
                     if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
                         let values = ["name": name, "email": email, "profileImageUrl": profileImageUrl]
-                        self.registerUserIntoDatabaseWithUID(uid: uid, values: values as [String : AnyObject])
+                        self.registerUserIntoDatabaseWithUID(uid: uid, values: values)
                     
                     }
                 })
@@ -44,7 +46,7 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
         })
     }
     
-    private func registerUserIntoDatabaseWithUID(uid: String, values: [String: AnyObject]) {
+    private func registerUserIntoDatabaseWithUID(uid: String, values: [String: Any]) {
         // Successfully authenticated user
         let ref = FIRDatabase.database().reference(fromURL: "https://chat-app-575b3.firebaseio.com/")
         let usersReference = ref.child("users").child(uid)
