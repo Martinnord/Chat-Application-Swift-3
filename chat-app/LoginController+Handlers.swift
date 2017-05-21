@@ -28,11 +28,10 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
             
             // Successfully authenticated user
             let imageName = UUID().uuidString // unique string
-            let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).png")
+            let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).jpg")
             
-            if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
+            if let uploadData = UIImageJPEGRepresentation(self.profileImageView.image!, 0.1) { // Shitty quality lets goo
                 storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
-                    
                     
                     if error != nil {
                         return
