@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 extension LoginController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+        
     func handleRegister() {
         guard let email = emailTextField.text, let password = passwordTextField.text, let name = nameTextField.text else {
             print("Form is not valid")
@@ -58,6 +58,9 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
                 print(err as Any)
                 return
             }
+            self.messageController?.fetchUserAndSetupNavbarTitle()
+            //self.messageController?.navigationItem.title = values["names"] as? String
+            
             self.dismiss(animated: true, completion: nil)
         })
     }

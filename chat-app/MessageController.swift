@@ -34,14 +34,22 @@ class MessageController: UITableViewController {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
             handleLogout()
         } else {
-            let uid = FIRAuth.auth()?.currentUser?.uid
-            FIRDatabase.database().reference().child("users").child(uid!).observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                if let dictionary = snapshot.value as? [String: Any] {
-                    self.navigationItem.title = dictionary["name"] as? String
-                }
-            }, withCancel: nil)
+            fetchUserAndSetupNavbarTitle()
         }
+    }
+    
+    func fetchUserAndSetupNavbarTitle() {
+        // No need for forceunwrapping
+        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
+            return
+        }
+        
+        FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+        if let dictionary = snapshot.value as? [String: Any] {
+            self.navigationItem.title = dictionary["name"] as? String
+        }
+        }, withCancel: nil)
     }
     
     func handleLogout() {
@@ -53,7 +61,7 @@ class MessageController: UITableViewController {
         }
         
         let loginController = LoginController()
-        
+        loginController.messageController = self
         present(loginController, animated: true, completion: nil)
         
     }
