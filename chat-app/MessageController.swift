@@ -47,11 +47,14 @@ class MessageController: UITableViewController {
         FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
                 
         if let dictionary = snapshot.value as? [String: Any] {
+            let title = self.navigationItem.title
             self.navigationItem.title = dictionary["name"] as? String
             
 //            let user = User()
 //            user.setValuesForKeys(dictionary)
 //            self.setupNavbarWithUser(user: user)
+//            title.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
+
             
         }
             
@@ -63,7 +66,6 @@ class MessageController: UITableViewController {
 
         self.navigationItem.titleView = titleView
         
-        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
 
     }
     
