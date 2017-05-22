@@ -47,11 +47,11 @@ class MessageController: UITableViewController {
         FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
                 
         if let dictionary = snapshot.value as? [String: Any] {
-            //self.navigationItem.title = dictionary["name"] as? String
+            self.navigationItem.title = dictionary["name"] as? String
             
-            let user = User()
-            user.setValuesForKeys(dictionary)
-            self.setupNavbarWithUser(user: user)
+//            let user = User()
+//            user.setValuesForKeys(dictionary)
+//            self.setupNavbarWithUser(user: user)
             
         }
             
@@ -60,14 +60,19 @@ class MessageController: UITableViewController {
 
     func setupNavbarWithUser(user: User) {
         let titleView = UIView()
-        
-        titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
-        titleView.backgroundColor = UIColor.red
-        
+
         self.navigationItem.titleView = titleView
+        
+        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
+
     }
     
-    
+    func showChatController() {
+        print(124)
+//        let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+//        navigationController?.pushViewController(chatLogController, animated: true)
+    }
+
     func handleLogout() {
         
         do {
@@ -81,8 +86,5 @@ class MessageController: UITableViewController {
         present(loginController, animated: true, completion: nil)
         
     }
-    
-
-
 }
 

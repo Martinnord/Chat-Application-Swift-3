@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 extension LoginController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        
+    
     func handleRegister() {
         guard let email = emailTextField.text, let password = passwordTextField.text, let name = nameTextField.text else {
             print("Form is not valid")
@@ -30,7 +30,9 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
             let imageName = UUID().uuidString // unique string
             let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).jpg")
             
-            if let uploadData = UIImageJPEGRepresentation(self.profileImageView.image!, 0.1) { // Shitty quality lets goo
+            // No force unwrapp
+            if let profileImage = self.profileImageView.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) { // Shitty quality lets goo
+            
                 storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
                     
                     if error != nil {
@@ -58,7 +60,12 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
                 return
             }
             self.messageController?.fetchUserAndSetupNavbarTitle()
-            //self.messageController?.navigationItem.title = values["names"] as? String
+//            self.messageController?.navigationItem.title = values["names"] as? String
+//            let user = User()
+            
+            // If keys don't match it will crash
+//            user.setValuesForKeys(values)
+//            self.messageController?.setupNavbarWithUser(user: user)
             
             self.dismiss(animated: true, completion: nil)
         })
